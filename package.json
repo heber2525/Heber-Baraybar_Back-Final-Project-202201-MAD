@@ -7,7 +7,8 @@
     "scripts": {
         "start": "cross-env NODE_ENV=dev nodemon",
         "start:build": "cross-env NODE_ENV=prod node index.js",
-        "test": "cross-env NODE_ENV=test jest --watchAll --coverage --runInBand",
+        "test:all": "cross-env NODE_ENV=test jest --watchAll --coverage --runInBand",
+        "test": "cross-env NODE_ENV=test jest --passWithNoTests",
         "lint": "eslint",
         "test:watch": "jest --watchAll",
         "test:cov": "jest --coverage01~"
