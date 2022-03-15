@@ -1,3 +1,11 @@
+node_modules
+.git/
+.vscode/
+.github/
+.husky/
+.scannerwork/
+package-lock.json
+
 # Logs
 logs
 *.log
