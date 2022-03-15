@@ -1,5 +1,5 @@
 {
-    "name": "08_mongoose",
+    "name": "kukify",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -8,7 +8,9 @@
         "start": "cross-env NODE_ENV=dev nodemon",
         "start:build": "cross-env NODE_ENV=prod node index.js",
         "test": "cross-env NODE_ENV=test jest --watchAll --coverage --runInBand",
-        "lint": "eslint"
+        "lint": "eslint",
+        "test:watch": "jest --watchAll",
+        "test:cov": "jest --coverage01~"
     },
     "keywords": [],
     "author": "",
@@ -20,9 +22,9 @@
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.25.4",
-        "eslint-plugin-jest": "^26.0.0",
+        "eslint-plugin-jest": "^26.1.1",
         "husky": "^7.0.4",
-        "jest": "^27.4.7"
+        "jest": "^27.5.1"
     },
     "prettier": {
         "singleQuote": true
@@ -44,9 +46,11 @@
         "cors": "^2.8.5",
         "dotenv": "^16.0.0",
         "express": "^4.17.3",
+        "g": "^2.0.1",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.2.3",
         "morgan": "^1.10.0",
+        "nodemon": "^2.0.15",
         "supertest": "^6.2.2"
     }
 }
