@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 const modelName = 'studentUser';
 
 const studentUserSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    email: { type: String, required: true },
     country: { type: String },
     city: { type: String },
-    languages: { type: Array, required: true },
+    languages: { type: Array, required: true, ref: 'languages' },
     comment: { type: String, required: true },
     password: { type: String, required: true },
-    favorites: { type: Array },
+    favorites: { type: Array, ref: 'favorites' },
 });
 studentUserSchema.set('toJSON', {
     transform: (document, returnedObject) => {

@@ -1,21 +1,21 @@
 import { createToken } from '../services/auth.js';
 import bcrypt from 'bcryptjs';
-import teacherUser from '../models/students.model.js';
+import teacherUser from '../models/teachers.model.js';
 
 export const userTeacherLogin = async (req, resp, next) => {
     const user = req.body;
-    const loginError = new Error('user or password invalid');
-    loginError.status = 401;
+
     if (!user.name || !user.password) {
-        next(loginError);
+        next(new Error('proffessor or password not found'));
     } else {
         const userFound = await teacherUser.findOne({
             name: user.name,
         });
+        console.log(userFound.password, 'userfound', user.password);
         if (!userFound) {
-            next(loginError);
+            next(new Error('Professor not found'));
         } else if (!bcrypt.compareSync(user.password, userFound.password)) {
-            next(loginError);
+            next(new Error('Invalid password'));
         } else {
             const token = createToken({
                 name: userFound.name,
