@@ -1,4 +1,3 @@
-import { createToken } from '../services/auth.js';
 import studentUser from '../models/students.model.js';
 import bcrypt from 'bcryptjs';
 
