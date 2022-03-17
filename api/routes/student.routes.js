@@ -15,6 +15,6 @@ router.post('/register', userStudentRegister);
 router.get('/', getAllStudents);
 router.get('/:id', getStudent);
 router.delete('/:id', deleteStudent);
-// router.patch('/:id/favorites/teacher/', addFavorites);
-// router.delete('/:id', deleteStudent);
+// router.patch('/:id/favorites/teacher/:id', addFavorites);
+
 export default router;

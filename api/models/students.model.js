@@ -10,7 +10,7 @@ const studentUserSchema = new mongoose.Schema({
     languages: { type: Array, required: true, ref: 'languages' },
     comment: { type: String, required: true },
     password: { type: String, required: true },
-    favorites: { type: Array, ref: 'favorites' },
+    favorites: [{ type: mongoose.Types.ObjectId, ref: 'teacherUser' }],
 });
 studentUserSchema.set('toJSON', {
     transform: (document, returnedObject) => {

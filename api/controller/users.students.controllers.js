@@ -1,4 +1,3 @@
-import { createToken } from '../services/auth.js';
 import studentUser from '../models/students.model.js';
 import bcrypt from 'bcryptjs';
 
@@ -55,20 +54,3 @@ export const deleteStudent = async (req, res, next) => {
         next(err);
     }
 };
-// export const updateStudent = (req, res, next) => {
-//     crud.updateStudent(req.params.id, req.body, teacherUser).then((resp) => {
-//         res.json(resp);
-//     });
-// };
-
-// export async function addFavorites(req, res, next) {
-//     return await crud.findByIdAndUpdate(id, partialTask, { new: true });
-// }
-// export const deleteStudent = (req, res, next) => {
-//     deleteStudent(req.params.id, req.body, studentUser).then((res) => {
-//         res.json(resp);
-//     });
-// };
-// export async function deleteTask(id, Task) => { return await Task.findByIdAndDelete(id).populate('responsible', {
-//         tasks: 0,
-//     });

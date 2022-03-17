@@ -1,4 +1,4 @@
-import { createToken } from '../services/auth.js';
+import studentUser from '../models/students.model.js';
 import teacherUser from '../models/teachers.model.js';
 
 export async function userTeacherRegister(req, res) {
@@ -44,6 +44,15 @@ export const deleteTeacher = async (req, res, next) => {
             next(error);
         }
         res.json(resp);
+    } catch (err) {
+        next(err);
+    }
+};
+export const addFavorites = async (req, res, next) => {
+    try {
+        console.log(req);
+        let currentUser = await studentUser.findById(req.tokenPayload.id);
+        res.json();
     } catch (err) {
         next(err);
     }
