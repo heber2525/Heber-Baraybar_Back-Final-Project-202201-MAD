@@ -19,7 +19,6 @@ app.use(cors());
 
 app.use('/user/teacher', teacherRoutes);
 app.use('/user/student', userRoutes);
-// app.use('/users');
 
 // eslint-disable-next-line no-unused-vars
 // app.use((err, req, resp, next) => {

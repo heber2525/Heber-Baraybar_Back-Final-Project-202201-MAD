@@ -1,4 +1,3 @@
-import { createToken } from '../services/auth.js';
 import teacherUser from '../models/teachers.model.js';
 
 export async function userTeacherRegister(req, res) {
