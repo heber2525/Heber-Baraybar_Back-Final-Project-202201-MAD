@@ -2,5 +2,5 @@ projectKey=kukify
 serverUrl=http://localhost:9000
 serverVersion=9.3.0.51899
 dashboardUrl=http://localhost:9000/dashboard?id=kukify
-ceTaskId=AX-NZGtQqixMXk20xWyY
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AX-NZGtQqixMXk20xWyY
+ceTaskId=AX-cFx7eqixMXk20xWya
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AX-cFx7eqixMXk20xWya

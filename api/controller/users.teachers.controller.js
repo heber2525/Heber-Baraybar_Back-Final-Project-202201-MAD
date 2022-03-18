@@ -38,7 +38,7 @@ export const deleteTeacher = async (req, res, next) => {
     try {
         const resp = await teacherUser.findByIdAndDelete(req.params.id);
 
-        if (res === null) {
+        if (resp === null) {
             const error = new Error('No teachers to delete');
             error.status = 204;
             next(error);
@@ -50,9 +50,37 @@ export const deleteTeacher = async (req, res, next) => {
 };
 export const addFavorites = async (req, res, next) => {
     try {
-        console.log(req);
-        let currentUser = await studentUser.findById(req.tokenPayload.id);
-        res.json();
+        let currentUser = await studentUser.findById(req.tokenPayload.userId);
+
+        const currentStudentFavorites = currentUser.favorites.map((element) =>
+            element.toString()
+        );
+
+        const isInFavorites = currentStudentFavorites.some(
+            (elem) => elem === req.params.id
+        );
+
+        let updatedStudentFavorites;
+
+        if (isInFavorites) {
+            updatedStudentFavorites = await studentUser.findByIdAndUpdate(
+                req.tokenPayload.userId,
+                {
+                    $pull: { favorites: req.params.id },
+                },
+                { new: true }
+            );
+        } else {
+            updatedStudentFavorites = await studentUser.findByIdAndUpdate(
+                req.tokenPayload.userId,
+                {
+                    $addToSet: { favorites: req.params.id },
+                },
+                { new: true }
+            );
+        }
+
+        res.status(200).json(updatedStudentFavorites);
     } catch (err) {
         next(err);
     }
