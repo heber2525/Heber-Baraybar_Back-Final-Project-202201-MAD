@@ -21,5 +21,5 @@ app.use('/user/teacher', teacherRoutes);
 app.use('/user/student', userRoutes);
 
 export const server = app.listen(port, () => {
-    handleListen(port);
+    console.log(`Server listening in http://localhost:${port}`);
 });

@@ -29,7 +29,7 @@ describe('Given the student controller', () => {
                 expect(next).toHaveBeenCalled();
             });
         });
-        describe('And there are not passwd', () => {
+        describe('And there is not password', () => {
             test('Then call next ', async () => {
                 req.body = { passwd: '1234' };
                 await controller.userStudentLogin(req, res, next);
@@ -64,7 +64,7 @@ describe('Given the student controller', () => {
                 test('Then call send', async () => {
                     const student = {
                         name: 'Heber',
-                        id: '1',
+                        _id: '1',
                     };
                     studentUser.findOne = jest.fn().mockResolvedValue(student);
                     bcrypt.compareSync.mockReturnValue(true);

@@ -24,7 +24,7 @@ export const getTeacher = async (req, res, next) => {
     try {
         const resp = await teacherUser.findById(req.params.id);
 
-        if (res === null) {
+        if (resp === null) {
             const error = new Error('No data');
             error.status = 204;
             next(error);

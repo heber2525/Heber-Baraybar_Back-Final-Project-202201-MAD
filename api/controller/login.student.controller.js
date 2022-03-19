@@ -18,7 +18,7 @@ export const userStudentLogin = async (req, resp, next) => {
         } else {
             const token = createToken({
                 name: userFound.name,
-                id: userFound._id.toString(),
+                id: userFound._id,
             });
             resp.json({
                 token,

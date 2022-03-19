@@ -27,10 +27,17 @@ describe('Given the function UserStudentRegister', () => {
             expect(next).toHaveBeenCalled();
         });
     });
+    describe('When calling it and error', () => {
+        test('Then it should return null', async () => {
+            studentUser.find.mockResolvedValue(null);
+            await controller.getAllStudents(req, res, next);
+            expect(next).toHaveBeenCalled();
+        });
+    });
 
     describe('When calling it', () => {
         test('Then it should return an array of studentUser', async () => {
-            await controller.getAllStudents('', res, next);
+            await controller.getAllStudents(req, res, next);
             expect(res.json).toHaveBeenCalled();
         });
     });
@@ -48,13 +55,20 @@ describe('Given the function UserStudentRegister', () => {
             expect(res.json).toHaveBeenCalled();
         });
     });
+    describe('When calling it and error', () => {
+        test('Then it should return null', async () => {
+            studentUser.findById.mockResolvedValue(null);
+            await controller.getStudent(req, res, next);
+            expect(next).toHaveBeenCalled();
+        });
+    });
     describe('When calling all it without finding any student', () => {
         beforeEach(() => {
             studentUser.findById({ name: 'Heber', password: '1234' });
         });
         test('Then it should call next ', async () => {
             studentUser.findById.mockRejectedValue(new Error('invalid params'));
-            await controller.getStudent('', res, next);
+            await controller.getStudent(req, res, next);
             expect(next).toHaveBeenCalled();
         });
     });
@@ -65,6 +79,13 @@ describe('Given the function UserStudentRegister', () => {
             expect(res.json).toHaveBeenCalled();
         });
     });
+    describe('When calling it and error', () => {
+        test('Then it should return null', async () => {
+            studentUser.findByIdAndDelete.mockResolvedValue(null);
+            await controller.deleteStudent(req, res, next);
+            expect(next).toHaveBeenCalled();
+        });
+    });
     describe('When calling all it without finding any student', () => {
         studentUser.findByIdAndDelete({ name: 'Heber', password: '1234' });
 
@@ -72,7 +93,7 @@ describe('Given the function UserStudentRegister', () => {
             studentUser.findByIdAndDelete.mockRejectedValue(
                 new Error('no data')
             );
-            await controller.deleteStudent('', res, next);
+            await controller.deleteStudent(req, res, next);
             expect(next).toHaveBeenCalled();
         });
     });
