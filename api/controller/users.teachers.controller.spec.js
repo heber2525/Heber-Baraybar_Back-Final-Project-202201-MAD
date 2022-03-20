@@ -41,6 +41,7 @@ describe('Given the function userTeacherRegister', () => {
         beforeEach(() => {
             teacherUser.find.mockResolvedValue(null);
         });
+
         test('Then it should return null', async () => {
             await controller.getAllTeachers(req, res, next);
             expect(next).toHaveBeenCalled();
@@ -144,6 +145,95 @@ describe('Given the function userTeacherRegister', () => {
         test('Then it should return null', async () => {
             teacherUser.findById.mockRejectedValue();
             await controller.deleteTeacher(req, res, next);
+            expect(next).toHaveBeenCalled();
+        });
+    });
+    describe('When calling it and found student with an empty array', () => {
+        req = {
+            tokenPayload: { userId: '08037397839837398' },
+            params: {
+                id: '76182376108247',
+            },
+        };
+
+        test('Then it update the array', async () => {
+            studentUser.findById.mockResolvedValue({
+                favorites: [],
+            });
+            studentUser.findByIdAndUpdate.mockResolvedValue({
+                favorites: ['76182376108247'],
+            });
+            await controller.addFavorites(req, res, next);
+            expect(res.json).toHaveBeenCalled();
+        });
+    });
+    describe('When calling it and found student with a filled array', () => {
+        req = {
+            tokenPayload: { userId: '08037397839837398' },
+            params: {
+                id: '76182376108247',
+            },
+        };
+        test('Then it update the array', async () => {
+            studentUser.findById.mockResolvedValue({
+                favorites: ['08037397839837398'],
+            });
+            studentUser.findByIdAndUpdate.mockResolvedValue({
+                favorites: [],
+            });
+            await controller.addFavorites(req, res, next);
+            expect(res.json).toHaveBeenCalled();
+        });
+    });
+    describe('When calling it and error', () => {
+        test('Then it should return null', async () => {
+            teacherUser.findById.mockRejectedValue();
+            await controller.addFavorites(req, res, next);
+            expect(next).toHaveBeenCalled();
+        });
+    });
+
+    describe('When calling it and found teacher with an empty array', () => {
+        req = {
+            tokenPayload: { userId: '82772372378' },
+            params: {
+                id: '9349829472947',
+            },
+        };
+
+        test('Then it update the array', async () => {
+            teacherUser.findById.mockResolvedValue({
+                studentBooked: [],
+            });
+            teacherUser.findByIdAndUpdate.mockResolvedValue({
+                studentBooked: ['9349829472947'],
+            });
+            await controller.classesBooked(req, res, next);
+            expect(res.json).toHaveBeenCalled();
+        });
+    });
+    describe('When calling it and found a teacher with a filled array', () => {
+        req = {
+            tokenPayload: { userId: '82772372378' },
+            params: {
+                id: '9349829472947',
+            },
+        };
+        test('Then it update the array', async () => {
+            teacherUser.findById.mockResolvedValue({
+                studentBooked: ['08037397839837398'],
+            });
+            teacherUser.findByIdAndUpdate.mockResolvedValue({
+                studentBooked: [],
+            });
+            await controller.classesBooked(req, res, next);
+            expect(res.json).toHaveBeenCalled();
+        });
+    });
+    describe('When calling it and error', () => {
+        test('Then it should return null', async () => {
+            teacherUser.findById.mockRejectedValue();
+            await controller.classesBooked(req, res, next);
             expect(next).toHaveBeenCalled();
         });
     });

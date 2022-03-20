@@ -85,3 +85,43 @@ export const addFavorites = async (req, res, next) => {
         next(err);
     }
 };
+
+export const classesBooked = async (req, res, next) => {
+    try {
+        let currentTeacher = await teacherUser.findById(
+            req.tokenPayload.userId
+        );
+
+        const currentClassesBooked = currentTeacher.studentBook.map((element) =>
+            element.toString()
+        );
+
+        const isBooked = currentClassesBooked.some(
+            (elem) => elem === req.params.id
+        );
+
+        let updatedTeacherClasses;
+
+        if (currentTeacher) {
+            updatedTeacherClasses = await teacherUser.findByIdAndUpdate(
+                req.tokenPayload.userId,
+                {
+                    $pull: { studentBooked: req.params.id },
+                },
+                { new: true }
+            );
+        } else {
+            updatedTeacherClasses = await teacherUser.findByIdAndUpdate(
+                req.tokenPayload.userId,
+                {
+                    $addToSet: { studentBooked: req.params.id },
+                },
+                { new: true }
+            );
+        }
+
+        res.status(200).json(updatedTeacherClasses);
+    } catch (err) {
+        next(err);
+    }
+};
