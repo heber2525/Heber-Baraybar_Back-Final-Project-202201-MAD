@@ -11,6 +11,7 @@ const studentUserSchema = new mongoose.Schema({
     comment: { type: String, required: true },
     password: { type: String, required: true },
     favorites: [{ type: mongoose.Types.ObjectId, ref: 'teacherUser' }],
+    reviews: [{ type: mongoose.Types.ObjectId, ref: 'reviewTeacherUser' }],
 });
 studentUserSchema.set('toJSON', {
     transform: (document, returnedObject) => {

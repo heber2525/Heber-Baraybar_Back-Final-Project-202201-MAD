@@ -19,7 +19,7 @@ export async function userStudentRegister(req, res, next) {
 export const getAllStudents = async (req, res, next) => {
     try {
         const resp = await studentUser.find({});
-        // .populate('languages', 'favorites');
+
         if (resp === null) {
             const error = new Error('No data');
             error.status = 204;
@@ -33,8 +33,16 @@ export const getAllStudents = async (req, res, next) => {
 
 export const getStudent = async (req, res, next) => {
     try {
-        const resp = await studentUser.findById(req.params.id);
-        // .populate('favorites', 'languages');
+        const resp = await studentUser
+            .findByIdAndUpdate(req.params.id)
+            .populate({
+                path: 'reviews',
+                populate: {
+                    path: 'TeacherId',
+                    select: 'name',
+                },
+            });
+
         if (resp === null) {
             const error = new Error('No data');
             error.status = 204;
