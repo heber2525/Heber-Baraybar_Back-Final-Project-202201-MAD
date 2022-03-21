@@ -1,34 +1,34 @@
-import teacherReview from "../models/reviews.teacher.model.js";
+// import teacherReview from "../models/reviews.teacher.model.js";
 
-export const reviewOfTeacher = async (req, res, next) => {
-    try {
-        let currentUser = await teacherUser.findById(req.tokenPayload.userId);
+// export const reviewOfTeacher = async (req, res, next) => {
+//     try {
+//         let currentUser = await teacherUser.findById(req.tokenPayload.userId);
 
-        const currentTeacherReview = currentUser.review.map((element) =>
-            element.toString()
-        );
+//         const currentTeacherReview = currentUser.review.map((element) =>
+//             element.toString()
+//         );
 
-        const isReviewed = currentTeacherReview.some(
-            (elem) => elem === req.params.id
-        );
+//         const isReviewed = currentTeacherReview.some(
+//             (elem) => elem === req.params.id
+//         );
 
-        let updatedTeacherReview;
+//         let updatedTeacherReview;
 
-        isReviewed = {
-            updatedTeacherReview = await teacherUser.findByIdAndUpdate(
-                req.tokenPayload.userId,
-                {
-                    $pull: { review: req.params.id },
-                },
-                { new: true }
-            );
-        } 
+//         isReviewed = {
+//             updatedTeacherReview = await teacherUser.findByIdAndUpdate(
+//                 req.tokenPayload.userId
+//                 {
+//                     $pull: { review: req.params.id },
+//                 },
+//                 { new: true }
+//             )
+//         }
 
-        res.status(200).json(updatedTeacherReview);
-    } catch (err) {
-        next(err);
-    }
-};
+//         res.status(200).json(updatedTeacherReview);
+//     } catch (err) {
+//         next(err);
+//     }
+// };
 
 // export const addFavorites = async (req, res, next) => {
 //     try {

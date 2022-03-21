@@ -96,9 +96,9 @@ export const classesBooked = async (req, res, next) => {
             element.toString()
         );
 
-        const isBooked = currentClassesBooked.some(
-            (elem) => elem === req.params.id
-        );
+        // const isBooked = currentClassesBooked.some(
+        //     (elem) => elem === req.params.id
+        // );
 
         let updatedTeacherClasses;
 

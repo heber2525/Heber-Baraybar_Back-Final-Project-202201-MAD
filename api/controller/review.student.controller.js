@@ -23,11 +23,12 @@ export const reviewOfStudent = async (req, res, next) => {
                     $pull: { review: req.params.id },
                 },
                 { new: true }
-            );
+            )
         } 
 
         res.status(200).json(updateStudentReview);
     } catch (err) {
         next(err);
     }
+   
 };
