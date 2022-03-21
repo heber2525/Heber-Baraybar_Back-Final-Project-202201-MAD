@@ -1,9 +1,20 @@
 import studentUser from '../models/students.model.js';
 import teacherUser from '../models/teachers.model.js';
+import bcrypt from 'bcryptjs';
 
-export async function userTeacherRegister(req, res) {
-    const newUser = await teacherUser.create({ ...req.body });
-    res.json({ ...newUser });
+export async function userTeacherRegister(req, res, next) {
+    try {
+        const encryptedPassword = bcrypt.hashSync(req.body.password);
+        const newUser = await teacherUser.create({
+            ...req.body,
+            password: encryptedPassword,
+        });
+        console.log(await teacherUser.create({}));
+        res.json(newUser);
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
 }
 
 export const getAllTeachers = async (req, res, next) => {
@@ -88,39 +99,26 @@ export const addFavorites = async (req, res, next) => {
 
 export const classesBooked = async (req, res, next) => {
     try {
-        let currentTeacher = await teacherUser.findById(
-            req.tokenPayload.userId
-        );
+        let currentUser = await studentUser.findById(req.tokenPayload.userId);
+        let currentTeacher = await teacherUser.findById(req.params.id);
 
-        const currentClassesBooked = currentTeacher.studentBook.map((element) =>
-            element.toString()
-        );
+        console.log(currentTeacher);
 
-        // const isBooked = currentClassesBooked.some(
-        //     (elem) => elem === req.params.id
-        // );
-
-        let updatedTeacherClasses;
-
-        if (currentTeacher) {
-            updatedTeacherClasses = await teacherUser.findByIdAndUpdate(
-                req.tokenPayload.userId,
-                {
-                    $pull: { studentBooked: req.params.id },
-                },
-                { new: true }
+        if (
+            currentTeacher.studentBooked.find((idStudent) =>
+                idStudent.equals(currentUser._id)
+            )
+        ) {
+            currentTeacher.studentBooked = currentTeacher.studentBooked.filter(
+                (idStudent) => !idStudent.equals(currentUser._id)
             );
+            console.log(currentTeacher);
         } else {
-            updatedTeacherClasses = await teacherUser.findByIdAndUpdate(
-                req.tokenPayload.userId,
-                {
-                    $addToSet: { studentBooked: req.params.id },
-                },
-                { new: true }
-            );
+            currentTeacher.studentBooked.push(currentUser._id);
         }
+        await currentTeacher.save();
 
-        res.status(200).json(updatedTeacherClasses);
+        res.status(200).json(currentTeacher);
     } catch (err) {
         next(err);
     }
