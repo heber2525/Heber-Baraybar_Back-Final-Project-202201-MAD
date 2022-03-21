@@ -12,7 +12,7 @@ const teacherUserSchemma = new mongoose.Schema({
     video: { type: String, requires: true },
     comment: { type: String, required: true },
     password: { type: String, required: true },
-    reviews: [{ type: mongoose.Types.ObjectId, ref: 'studentUser' }],
+    reviews: [{ type: mongoose.Types.ObjectId, ref: 'reviewStudentUser' }],
     studentBooked: [{ type: mongoose.Types.ObjectId, ref: 'studentUser' }],
 });
 

@@ -7,7 +7,8 @@ import {
     userStudentRegister,
 } from '../controller/users.students.controllers.js';
 import { userStudentLogin } from '../controller/login.student.controller.js';
-// import reviewOfStudent from '../controller/review.student.controller.js';
+
+// import { reviewOfStudent } from '../controller/review.student.controller.js';
 
 const router = express.Router();
 

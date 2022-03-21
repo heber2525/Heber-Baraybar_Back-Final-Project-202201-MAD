@@ -33,7 +33,15 @@ export const getAllTeachers = async (req, res, next) => {
 
 export const getTeacher = async (req, res, next) => {
     try {
-        const resp = await teacherUser.findById(req.params.id);
+        const resp = await teacherUser
+            .findByIdAndUpdate(req.params.id)
+            .populate({
+                path: 'review',
+                populate: {
+                    path: 'TeacherId',
+                    select: 'name',
+                },
+            });
 
         if (resp === null) {
             const error = new Error('No data');
