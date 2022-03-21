@@ -6,14 +6,14 @@ export const userTeacherLogin = async (req, resp, next) => {
     const user = req.body;
 
     if (!user.name || !user.password) {
-        next(new Error('proffessor or password not found'));
+        next(new Error('teacher or password not found'));
     } else {
         const userFound = await teacherUser.findOne({
             name: user.name,
         });
-        console.log(userFound.password, 'userfound', user.password);
+
         if (!userFound) {
-            next(new Error('Professor not found'));
+            next(new Error('teacher not found'));
         } else if (!bcrypt.compareSync(user.password, userFound.password)) {
             next(new Error('Invalid password'));
         } else {

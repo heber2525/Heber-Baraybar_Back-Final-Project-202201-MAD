@@ -8,9 +8,14 @@ const teacherUserSchemma = new mongoose.Schema({
     city: { type: String, required: true },
     languages: { type: Array, required: true },
     price: { type: String, required: true },
+    image: { type: String, required: true },
+    video: { type: String, requires: true },
     comment: { type: String, required: true },
     password: { type: String, required: true },
+    reviews: [{ type: mongoose.Types.ObjectId, ref: 'studentUser' }],
+    studentBooked: [{ type: mongoose.Types.ObjectId, ref: 'studentUser' }],
 });
+
 teacherUserSchemma.set('toJSON', {
     transform: (document, returnedObject) => {
         delete returnedObject.__v;

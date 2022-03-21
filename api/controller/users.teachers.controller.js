@@ -1,3 +1,4 @@
+import studentUser from '../models/students.model.js';
 import teacherUser from '../models/teachers.model.js';
 
 export async function userTeacherRegister(req, res) {
@@ -23,7 +24,7 @@ export const getTeacher = async (req, res, next) => {
     try {
         const resp = await teacherUser.findById(req.params.id);
 
-        if (res === null) {
+        if (resp === null) {
             const error = new Error('No data');
             error.status = 204;
             next(error);
@@ -37,12 +38,89 @@ export const deleteTeacher = async (req, res, next) => {
     try {
         const resp = await teacherUser.findByIdAndDelete(req.params.id);
 
-        if (res === null) {
+        if (resp === null) {
             const error = new Error('No teachers to delete');
             error.status = 204;
             next(error);
         }
         res.json(resp);
+    } catch (err) {
+        next(err);
+    }
+};
+export const addFavorites = async (req, res, next) => {
+    try {
+        let currentUser = await studentUser.findById(req.tokenPayload.userId);
+
+        const currentStudentFavorites = currentUser.favorites.map((element) =>
+            element.toString()
+        );
+
+        const isInFavorites = currentStudentFavorites.some(
+            (elem) => elem === req.params.id
+        );
+
+        let updatedStudentFavorites;
+
+        if (isInFavorites) {
+            updatedStudentFavorites = await studentUser.findByIdAndUpdate(
+                req.tokenPayload.userId,
+                {
+                    $pull: { favorites: req.params.id },
+                },
+                { new: true }
+            );
+        } else {
+            updatedStudentFavorites = await studentUser.findByIdAndUpdate(
+                req.tokenPayload.userId,
+                {
+                    $addToSet: { favorites: req.params.id },
+                },
+                { new: true }
+            );
+        }
+
+        res.status(200).json(updatedStudentFavorites);
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const classesBooked = async (req, res, next) => {
+    try {
+        let currentTeacher = await teacherUser.findById(
+            req.tokenPayload.userId
+        );
+
+        const currentClassesBooked = currentTeacher.studentBook.map((element) =>
+            element.toString()
+        );
+
+        // const isBooked = currentClassesBooked.some(
+        //     (elem) => elem === req.params.id
+        // );
+
+        let updatedTeacherClasses;
+
+        if (currentTeacher) {
+            updatedTeacherClasses = await teacherUser.findByIdAndUpdate(
+                req.tokenPayload.userId,
+                {
+                    $pull: { studentBooked: req.params.id },
+                },
+                { new: true }
+            );
+        } else {
+            updatedTeacherClasses = await teacherUser.findByIdAndUpdate(
+                req.tokenPayload.userId,
+                {
+                    $addToSet: { studentBooked: req.params.id },
+                },
+                { new: true }
+            );
+        }
+
+        res.status(200).json(updatedTeacherClasses);
     } catch (err) {
         next(err);
     }
